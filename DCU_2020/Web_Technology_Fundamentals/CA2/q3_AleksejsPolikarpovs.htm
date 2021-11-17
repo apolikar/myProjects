@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="pattern generator">
+    <meta name="keywords" content="patterns, generate, pattern, generator">
+    <meta name="author" content="Aleksejs Polikarpovs">
+    <!-- web page title -->
+    <title>Pattern Generator</title>
+    <!-- links for custom fonts and icons -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/d9c5e705de.js" crossorigin="anonymous"></script>
+
+    <!-- internal css -->
+    <style>
+        body {
+            background-image: linear-gradient(#888460, #3667db);
+            font-family: 'Fraunces', serif;
+            font-size: 20px;
+        }
+
+        #container {
+            background-image: linear-gradient(#445272f6, #253864);
+            width: 1240px;
+            height: 750px;
+            margin: 0px auto;
+            display: flex;
+            border: 1px rgba(0, 0, 0, 0.616) solid;
+
+        }
+
+        #leftside {
+            flex: 1;
+            width: 50%;
+        }
+
+        #banner {
+            height: 10%;
+            font-family: 'Special Elite', cursive;
+            text-align: center;
+            font-size: 65px;
+            font-weight: bolder;
+            text-decoration: underline;
+            color: rgb(26, 23, 23);
+            padding: 40px 0px;
+        }
+
+        #box {
+            height: auto;
+            margin: auto;
+        }
+
+        #inputbox {
+            background-color: rgb(63, 58, 138);
+            border: 1px black solid;
+            text-align: center;
+            max-width: 87%;
+            margin: 20px auto;
+        }
+
+        input {
+            width: 250px;
+            height: 30px;
+            border: 3px black solid;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 20px;
+        }
+
+        button {
+            margin-top: 20px;
+            font-size: 20px;
+            padding: 5px 10px;
+            border: black solid 2px;
+            border-radius: 5px;
+            background-color: rgb(185, 191, 168);
+        }
+
+        button:hover {
+            background-color: rgb(226, 221, 144);
+        }
+
+        #info {
+            padding-left: 35px;
+        }
+
+        /* commercial box in the left bottom */
+        #decor {
+            font-size: 30px;
+            background-color: rgb(63, 58, 138);
+            height: 38%;
+            color: rgb(214, 60, 60);
+            margin: 20px;
+            border: black 1px solid;
+            padding-bottom: 21px;
+        }
+
+        /* custom icon represents commercial advertisement  */
+        i {
+            font-size: 320px;
+            padding-left: 10%;
+        }
+
+        #outputBox {
+            flex: 1;
+            width: 50%;
+            border: 1px black solid;
+            border-radius: 10px;
+            background-color: rgb(119, 167, 190);
+            margin: 15px;
+            color: rgb(26, 54, 133);
+            padding: 10px 10px 10px 30px;
+        }
+    </style>
+    <script>
+
+        // function generate will take input from input box and generate pattern 
+        // if input is valid
+        function generate() {
+
+            let number = document.getElementById("number").value;      // assign variable to user input
+            try {                                                      // try block where input is validated
+                if (number < 3 || number > 27)                         // if number is not in range
+                    throw "Number is out of range";                    // err thrown
+                if (number % 2 == 0)                                   // if number is uneven 
+                    throw "You should enter uneven number";            // err thrown
+            } catch (err) {                                            // catch block runs only if err is caught
+                document.getElementById("output").innerText =          // output err
+                    err + "\nPlease try again";
+                return;                                                // stop executing code and wait for new input
+            }
+            let temp = "";                                             // temp variable to store temporary output
+            let result = "";                                           // result variable will store final output
+
+            for (i = 1; i <= number; i++) {                            // loop from 1 till input number
+
+                let middle = Math.ceil(number / 2);                    // find middle line
+                if (i <= middle) {                                     // runs till middle line number
+                    if (i % 2 != 0) {                                  // if number is uneven
+                        temp += "X";                                   // X will be concat in to temp variable
+                        result += temp + "\n";                         // result will be concat with temp 
+                    }
+                    else {                                             // if number is even
+                        temp += "O";                                   // O will be concat in to temp variable
+                        result += temp + "\n";                         // result will be concat with temp
+                    }
+                } else {                                               // runs after we pass middle line number
+                    result += temp.substring(0, (middle - (i - middle))) + "\n";  // each time we remove last character from result 
+                }
+            }
+            document.getElementById("output").innerText = result;      // output 
+        }
+
+    </script>
+</head>
+
+<body>
+
+    <div id="container">
+        <div id="leftside">
+            <div id="banner">Generate Pattern v1.0</div>
+            <div id="box">
+                <!-- box with user input and generate button -->
+                <fieldset id="inputbox">
+                    <label for="number">Enter your number: </label>
+                    <!-- user input number is in this box -->
+                    <input type="number" id="number"><br>
+                    <!-- button onclick will invoke generate function -->
+                    <button onclick="generate()">Generate pattern</button>
+                </fieldset>
+            </div>
+            <!-- information for user how programm works -->
+            <div id="info">
+                <ul>
+                    <li>Please enter a number to generate pattern</li>
+                    <li>Number should be in range of 3 - 27</li>
+                    <li>Number should be uneven</li>
+                    <li>Press "Generate pattern" button</li>
+                </ul>
+            </div>
+            <!-- commercial banner for better presentation only-->
+            <div id="decor">
+                <i class="fab fa-angrycreative"></i>
+            </div>
+        </div>
+        <!-- output box for our pattern -->
+        <div id="outputBox">
+            <p id="output"></p>
+        </div>
+    </div>
+
+</body>
+
+</html>

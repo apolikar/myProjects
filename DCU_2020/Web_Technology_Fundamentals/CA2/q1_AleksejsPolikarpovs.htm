@@ -1,0 +1,191 @@
+
+<!-- Hi Morgan,
+I hope you well. This is my solution to Assignment 2.
+I try to give it some sort of desingn. I hope you like it.
+Thank you.
+Aleksejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Marvel history">
+    <meta name="keywords" content="marvel, spiderman, superheroes, batman, hulk">
+    <meta name="author" content="Aleksejs Polikarpovs">
+    <!-- web page title -->
+    <title>Marvel SuperHeroes</title>
+    <!-- links to custom google fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+    <!-- internal CSS -->
+    <style>
+        body {
+            /* body has atribute display: flex to divide screen in two halfs */
+            background-color: rgba(68, 65, 65, 0.966);
+            font-family: 'Bangers', cursive;
+            display: flex;
+        }
+
+        #left_interface {
+            /* left side of screen for text content */
+            width: 40%;
+            height: 100vh;
+            flex: 1;
+        }
+
+        header {
+            /* main header */
+            height: 50px;
+            padding-top: 60px;
+            text-decoration: underline;
+            color: rgb(201, 42, 42);
+            font-size: 60px;
+            text-align: center;
+        }
+
+        #text {
+            font-size: 18px;
+            color: rgb(192, 192, 192);
+            max-height: 50vh;
+            padding: 10%;
+            text-align: center;
+        }
+
+        #right_interface {
+            /* right side of the screen for image and buttons */
+            width: 60%;
+            height: 100vh;
+            flex: 1;
+        }
+
+        #image {
+            /* link to image */
+            background-image: url(main.jpg);
+            height: 450px;
+            /* Center the image */
+            background-position: center;
+            /* Do not repeat the image */
+            background-repeat: no-repeat;
+            /* Resize the background image to cover the entire container */
+            background-size: cover;
+        }
+
+        #buttons {
+            /* div where buttons will be located */
+            height: 8%;
+            margin-top: 40px;
+            margin-left: 30%;
+        }
+
+        .button {
+            /* class button will be universal for both buttons */
+            font-family: 'Bangers', cursive;
+            font-size: 24px;
+            border: black;
+            background-color: rgb(192, 192, 192);
+            padding: 15px 60px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin-right: 30px;
+            border-radius: 5px;
+        }
+
+        .button1:hover {
+            /* change colour on mouseover */
+            background-color: blue;
+            color: rgb(192, 192, 192);
+        }
+
+        .button2:hover {
+            background-color: green;
+            color: rgb(192, 192, 192);
+        }
+
+        #banner {
+            /* marvel logo in bottom right screen */
+            margin-top: 40px;
+            height: 18%;
+            font-size: 18vh;
+            background-color: rgb(209, 26, 26);
+            color: rgb(192, 192, 192);
+            border: 5px solid white;
+            border-radius: 5px;
+            text-align: center;
+
+        }
+    </style>
+    <!-- all javascript code goes in the script tag -->
+    <script type="text/javascript">
+        // function will change colour of id="body" to blue colour
+        function changeBlue() {
+            document.getElementById("body").style.backgroundColor = "rgb(2, 2, 49)";
+        }
+
+        // function will change colour of id="body" to green colour
+        function changeGreen() {
+            document.getElementById("body").style.backgroundColor = "rgb(1, 41, 1)";
+        }
+    </script>
+</head>
+
+<!-- body tag has structure of our web site with tags hierarchy. Body has id with name "body" -->
+
+<body id="body">
+    <div id="left_interface">
+        <!-- header of our webpage -->
+        <header>MARVEL SUPERHEROES</header>
+        <!-- text here is only for presentation purposes -->
+        <div id="text">
+            <p>Marvel Comics is the brand name and primary
+                imprint of Marvel Worldwide Inc., formerly Marvel Publishing,
+                Inc. and Marvel Comics Group, a publisher of American comic books
+                and related media. In 2009, The Walt Disney Company acquired Marvel
+                Entertainment, Marvel Worldwide's parent company.</p>
+            <p>Marvel was started in 1939 by Martin Goodman under a number of
+                corporations and imprints but now known as Timely Comics, and by
+                1951 had generally become known as Atlas Comics. The Marvel era
+                began in 1961, the year that the company launched The Fantastic
+                Four and other superhero titles created by Stan Lee, Jack Kirby,
+                Steve Ditko and many others. The Marvel brand, which had been
+                used over the years, was solidified as the company's primary brand.</p>
+            <p>Marvel counts among its characters such well-known superheroes
+                as Spider-Man, Iron Man, Captain America, the Hulk, Thor, Wolverine,
+                Ant-Man, the Wasp, Black Widow, Captain Marvel, Black Panther,
+                Doctor Strange, Ghost Rider, Blade, Daredevil, the Punisher and
+                Deadpool. Superhero teams exist such as the Avengers, the X-Men,
+                the Fantastic Four and the Guardians of the Galaxy as well as
+                supervillains including Doctor Doom, Magneto, Thanos, Loki, Green
+                Goblin, Kingpin, Red Skull, Ultron, the Mandarin, MODOK, Doctor
+                Octopus, Kang, Dormammu, Venom and Galactus. Most of Marvel's
+                fictional characters operate in a single reality known as the
+                Marvel Universe, with most locations mirroring real-life places;
+                many major characters are based in New York City. Additionally,
+                Marvel has published several licensed properties from other
+                companies. This includes Star Wars comics twice from 1977 to
+                1986 and again since 2015.</p>
+        </div>
+    </div>
+
+    <div id="right_interface">
+        <!-- image will be shown in this div -->
+        <div id="image"></div>
+
+        <!-- div with our buttons -->
+        <div id="buttons">
+            <!-- button 1 onclick will invoke function changeBlue -->
+            <button class="button button1" onclick="changeBlue()">Blue</button>
+            <!-- button 2 onclick will invoke function changeGreen -->
+            <button class="button button2" onclick="changeGreen()">Green</button>
+        </div>
+        <!-- banner for presentation purposes only -->
+        <div id="banner">M A R V E L</div>
+    </div>
+
+</body>
+
+</html>

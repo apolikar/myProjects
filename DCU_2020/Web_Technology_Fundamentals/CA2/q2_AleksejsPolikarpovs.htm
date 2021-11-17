@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="assignment">
+    <meta name="keywords" content="assignment 2">
+    <meta name="author" content="Aleksejs Polikarpovs">
+    <!-- web page title -->
+    <title>Question 2</title>
+    <!-- simple styling for better presentation -->
+    <style>
+        body {
+            background-color: rgb(187, 163, 129);
+        }
+
+        /* div container for our main content */
+        #container {
+            width: 1024px;
+            height: 100%;
+            margin: 0 auto;
+            background-color: burlywood;
+            padding: 20px;
+        }
+
+        h1 {
+            height: 100px;
+            text-align: center;
+            margin-top: 30px;
+            text-decoration: underline;
+            font-size: 55px;
+            font-style: italic;
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: 400;
+        }
+
+        #answerBox {
+            padding: 0 50px;
+            text-align: justify;
+        }
+
+        p {
+            font-size: 24px;
+            padding-left: 50px;
+            font-weight: 800;
+            color: rgb(56, 4, 4);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="container">
+        <h1>Question 2</h1>
+        <div id="answerBox">
+            <!-- unordered list to divide questions -->
+            <ul>
+                <li>
+                    <h2><strong>(a)</strong>(a) Declare variable x and assign it a
+                        value of 3. Declare variable y and assign it a value of 6.
+                        Display the product <strong>(in mathematics, a product is the result of multiplication)</strong> of these variables:</h2>
+                    <!-- our output will be here -->
+                    <p id="a"></p>
+                </li>
+                <li>
+                    <h2><strong>(b)</strong> Declare two variables named str1 and str2.
+                        Assign the value of Orient to str1 and Express to
+                        str2. Concatenate the two strings, with a space between each word:</h2>
+                    <p id="b"></p>
+                </li>
+                <li>
+                    <h2><strong>(c)</strong> Declare an array called instruments and assign it
+                        four elements: violin, viola, cello, bass.Access and display the third
+                        element in the array:</h2>
+                    <p id="c"></p>
+                </li>
+                <li>
+                    <h2><strong>(d)</strong>Construct an object called employee with properties id,
+                        firstname and lastname. Use afor..in loop, and display the properties of
+                        the object: </h2>
+                    <p id="d"></p>
+                </li>
+                <li>
+                    <h2><strong>(e)</strong>Declare a variable sum and initialise it to 0. Write a
+                        for loop that loops through a block of code 5 times. Include a counter
+                        variable called e in the for loop that decrements by 1 after each loop
+                        iteration. The value of the counter variable e after the final loop iteration
+                        should be 0. The body of the for loop should add e to sum so that on each
+                        iteration, sum will increase in value. At the end of the loop, display the
+                        variable sum: </h2>
+                    <p id="e"></p>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+    <!-- our js script -->
+    <script>
+
+        // our variables
+        let x = 6;
+        let y = 3;
+        // print output in to id "a"
+        document.getElementById("a").innerHTML = x * y;
+
+        let str1 = "Orient ";
+        let str2 = "Express";
+        document.getElementById("b").innerHTML = str1 + str2;
+
+        // arrays is zero indexed, so third element will be [2]
+        let instruments = ["violin", "viola", "cello", "bass"];
+        document.getElementById("c").innerHTML = instruments[2];
+
+        let employee = {
+            id: 12345,
+            firstName: "Aleksejs",
+            lastName: "Polikarpovs"
+        };
+        let properties = "";
+        // for in loop
+        for (let property in employee) {
+            // each loop iteration variable "properties" will be concatanated with object (key: value) values
+            properties += property + ": " + employee[property] + "\n";
+        };
+        document.getElementById("d").innerText = properties;
+
+        let sum = 0;
+        // loop will run 5 times: 4, 3, 2, 1, 0
+        for (e = 4; e >= 0; e--) {
+            sum += e;
+        }
+        document.getElementById("e").innerHTML = sum;
+
+    </script>
+</body>
+
+</html>

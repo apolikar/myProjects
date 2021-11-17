@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="age calculator">
+    <meta name="keywords" content="age, generate, generator">
+    <meta name="author" content="Aleksejs Polikarpovs">
+    <!-- web page title -->
+    <title>Age Calculator</title>
+    <!-- links to a custom fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+    <!-- interenal css -->
+    <style>
+        body {
+            background-image: linear-gradient(#5d4157, #a8caba);
+            font-size: 28px;
+            text-align: center;
+        }
+
+        #container {
+            min-height: 650px;
+            width: 1024px;
+            margin: 30px auto;
+        }
+
+        header {
+            height: 70px;
+            text-align: center;
+            font-size: 60px;
+            font-family: 'Satisfy', cursive;
+        }
+
+        /* box with link to validate result of our programm with 
+                                most popular online age calculator */
+        #linkBox {
+            height: 28px;
+            background-color: rgba(100, 100, 100, 0.329);
+            border: 1px black solid;
+            text-align: center;
+            font-size: 18px;
+            padding-top: 3px;
+        }
+
+        a {
+            color:  rgb(208, 212, 200);
+        }
+
+        #inputBox {
+            height: 100px;
+            line-height: 2px;
+            padding-top: 1px;
+        }
+
+        /* our input boxes for YYYYMMDD */
+        input {
+            width: 250px;
+            height: 30px;
+            border: 3px black solid;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 20px;
+        }
+
+        #button {
+            font-family: 'Satisfy', cursive;
+            font-size: 24px;
+            border: black;
+            background-color: rgb(192, 192, 192);
+            padding: 15px 100px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 5px;
+            margin-top: 18px;
+            margin-bottom: 20px;
+        }
+
+        #button:hover {
+            color: rgb(10, 12, 10);
+            background-color: rgb(208, 212, 200);
+        }
+
+        #mainResult {
+            height: 200px;
+        }
+
+        /* line to divide mainResult and footer */
+        hr {
+            background-color: rgba(100, 100, 100, 0.329);
+        }
+
+        footer {
+            height: 200px;
+            font-size: 17px;
+        }
+    </style>
+    <!-- our javascript is located between <script> tags -->
+    <script>
+
+        // function getAge will calculate age of a person in Years Months and Days 
+        function getAge() {
+
+            let birthYear = document.getElementById("yearInput").value;         // values from user input will be stored here
+            let birthMonth = document.getElementById("monthInput").value;
+            let birthDay = document.getElementById("dateInput").value;
+
+            let birth = new Date(birthYear, birthMonth - 1, birthDay);          // initialize birthday date
+            let today = new Date();                                             // initialize today's date
+            today.setHours(0, 0, 0, 0);                                         // we dont know precise time of birth so we set today's time at 00:00
+            const monthArr = ["January", "February", "March", "April",          // array with month names
+                "May", "June", "July", "August", "September", "October",
+                "November", "December"];
+
+            try {                                                               // validation on input
+
+                if (("" + birthYear).length !== 4)                              // check if years were in YYYY input
+                    throw "Entered Year is not in YYYY format";
+                if (("" + birthMonth).length !== 2)                             // check if months were in MM format
+                    throw "Entered Month is not in MM format";
+                if (("" + birthDay).length !== 2)                               // check if days were in DD format
+                    throw "Entered Date is not in DD format";
+                if (birthMonth < 1 || birthMonth > 12)                          // check if user input month is in range 1 - 12
+                    throw "Entered month is not in range of 1 - 12";
+                if (birthMonth == 2 && !isLeap(birthYear) && birthDay == 29)    // check if user month is February and is leap year
+                    throw "Entered year is not a leap year. " +
+                    "Input should be 1 - 28";
+                if (birthDay < 1 || birthDay > new Date(birthYear,              // check if user enters wrong date
+                    birthMonth, 0).getDate())                                   
+                    throw monthArr[birthMonth - 1] + " starts with 1 and last Date is " +
+                    new Date(birthYear, birthMonth, 0).getDate();
+                if (birth > today)                                              // check if user input is in future date
+                    throw "Entered date is ahead of present time"
+
+            } catch (err) {                                                     // if error was found
+                document.getElementById("mainResult").innerText = err +         // we inform user
+                    "\nPlease try again";
+                return;                                                         // stop executing code and wait for new input
+            }
+
+            let life = Math.round(Math.abs((birth.getTime() -                   // check total days of life
+                today.getTime()) / 86400000));
+            let years = Math.floor(life / 365.2425);                            // divide life by average days in a year
+
+            let months = birth.getMonth() > today.getMonth() ?                  // logic on months count
+                12 - ((birth.getMonth() + 1) - (today.getMonth() + 1)) :
+                (today.getMonth() + 1) - (birth.getMonth() + 1);
+            if (birth.getDate() > today.getDate()) {                            // fixing month
+                months--;
+                if (months < 0) {                                               // if result is negative (-1)
+                    months = 11;
+                }
+            }
+            let totalMonths = years * 12 + months;                              // variable for total months value
+
+            let lastPreviousMonth = new Date(today.getFullYear(),               // we find a last day of current month
+                today.getMonth() + 1, 0).getDate();
+            let days = birth.getDate() <= today.getDate() ?                     // logic on days count
+                today.getDate() - birth.getDate() :
+                lastPreviousMonth - birth.getDate() + today.getDate();
+
+            document.getElementById("mainResult").innerText =                   // print out result
+                "Years: " + years + "\nMonths: " + months + "\nDays: " + days +
+                            "\nTotal Months: " + totalMonths + "\nTotal Weeks: " + 
+                                        Math.floor(life / 7) + "\nTotal Days: " + life;
+        }
+
+        function isLeap(year) {                                                 // leap year detection 
+            return !(year % 4 !== 0 ||
+                (year % 4 === 0 && year % 100 === 0 && year % 400 !== 0));
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+    <div id="container">
+        <!-- our header  -->
+        <header>Age Calculator v1.0</header>
+        <!-- link to check result of our programm with most popular online age calculator -->
+        <div id="linkBox">
+            <!-- link will open in new tab -->
+            <a href="https://www.calculator.net/age-calculator.html" target="_blank">LINK TO VALIDATE CALCULATOR</a>
+        </div>
+        <div id="inputBox">
+            <p>Please enter your date of birth in YYYY/MM/DD format</p>
+            <!-- our boxes to enter YYYY or MM or DD will be validated automatically that 
+            input is number. Have placeholder to simplify user experience -->
+            <input type="number" name="yearInput" id="yearInput" placeholder="YYYY"> /
+            <input type="number" name="monthInput" id="monthInput" placeholder="MM"> /
+            <input type="number" name="dateInput" id="dateInput" placeholder="DD">
+        </div>
+        <div id="buttonBox">
+            <!-- our button to check age. will invoke function getAge -->
+            <button type="button" onclick="getAge()" id="button">Calculate Age</button>
+        </div>
+        <!-- our result box -->
+        <div id="mainResult"></div>
+        <footer>
+            <!-- line to separate result from footer content -->
+            <hr>
+            <!-- text gives some information about age calculation result-->
+            <p>The age of a person can be counted differently in different cultures. This calculator is based on the
+                most common age system. In this system, age grows at the birthday. For example, the age of a person that
+                has lived for 3 years and 11 months is 3 and the age will turn to 4 at his/her next birthday one month
+                later. Most western countries use this age system.</p>
+            <p>In some situations, the months and days result of this age calculator may be confusing, especially when
+                the starting date is the end of a month. For example, we all count Feb. 20 to March 20 to be one month.
+                However, there are two ways to calculate the age from Feb. 28, 2015 to Mar. 31, 2015. If thinking Feb.
+                28 to Mar. 28 as one month, then the result is one month and 3 days. If thinking both Feb. 28 and Mar.
+                31 as the end of the month, then the result is one month. Both calculation results are reasonable.
+                Similar situations exist for dates like Apr. 30 to May 31, May 30 to June 30, etc. The confusion comes
+                from the uneven number of days in different months. In our calculation, we used the former method.</p>
+        </footer>
+    </div>
+
+</body>
+
+</html>
